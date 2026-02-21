@@ -86,8 +86,9 @@ export default function BeerDetailPage({ params }: { params: Promise<{ id: strin
         acc.flavor += r.metrics.flavor;
         acc.mouthfeel += r.metrics.mouthfeel;
         acc.bubbles += r.metrics.bubbles;
+        acc.bitterness += (r.metrics.bitterness || 0);
         return acc;
-    }, { appearance: 0, aroma: 0, flavor: 0, mouthfeel: 0, bubbles: 0 });
+    }, { appearance: 0, aroma: 0, flavor: 0, mouthfeel: 0, bubbles: 0, bitterness: 0 });
 
     if (hasReviews) {
         meanMetrics.appearance /= reviews.length;
@@ -95,6 +96,7 @@ export default function BeerDetailPage({ params }: { params: Promise<{ id: strin
         meanMetrics.flavor /= reviews.length;
         meanMetrics.mouthfeel /= reviews.length;
         meanMetrics.bubbles /= reviews.length;
+        meanMetrics.bitterness /= reviews.length;
     }
 
     return (

@@ -47,13 +47,13 @@ export default function BeersPage() {
       <header className="page-header">
         <h1 className="page-title">our beers</h1>
         <p className="page-description">
-          a collection of scientific brewing experiments and established classics.
+          a collection of brewing experiments.
         </p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="beer-grid">
         {error && (
-          <div className="col-span-full p-8 border border-border bg-muted text-center">
+          <div className="error-message col-span-full">
             <p className="opacity-50">unable to load our beers.</p>
             <p className="text-sm opacity-30 mt-2">{error}</p>
           </div>
@@ -62,7 +62,7 @@ export default function BeersPage() {
           <BeerCard key={beer.id} beer={beer} />
         ))}
         {!error && beers.length === 0 && (
-          <p className="py-8 text-center opacity-30 col-span-full">no beers available in the database.</p>
+          <p className="empty-message col-span-full">no beers available in the database.</p>
         )}
       </div>
 
@@ -76,18 +76,42 @@ export default function BeersPage() {
           max-width: 600px;
         }
         .page-title {
-          font-size: 3rem;
+          font-size: 3.5rem;
           font-weight: 800;
-          letter-spacing: -0.03em;
+          letter-spacing: -0.04em;
           margin-bottom: var(--space-2);
           text-transform: lowercase;
         }
         .page-description {
-          font-size: 1.125rem;
+          font-size: 1.25rem;
           opacity: 0.6;
+          line-height: 1.4;
         }
-        @media (min-width: 1024px) {
-          .lg:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+        
+        .beer-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: var(--space-8);
+        }
+
+        .error-message, .empty-message {
+          padding: var(--space-8);
+          border: 1px solid var(--border);
+          background: var(--muted);
+          text-align: center;
+        }
+
+        @media (min-width: 768px) {
+          .beer-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .beer-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-12);
+          }
         }
       `}</style>
     </div>

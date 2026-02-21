@@ -9,12 +9,13 @@ interface SpiderGraphProps {
         flavor: number;
         mouthfeel: number;
         bubbles: number;
+        bitterness: number;
     };
     size?: number;
 }
 
 export default function SpiderGraph({ data, size = 300 }: SpiderGraphProps) {
-    const categories = ["appearance", "aroma", "flavor", "mouthfeel", "bubbles"];
+    const categories = ["appearance", "aroma", "flavor", "mouthfeel", "bubbles", "bitterness"];
     const maxValue = 10;
     const padding = 40;
     const center = size / 2;

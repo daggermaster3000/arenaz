@@ -45,6 +45,7 @@ export type Review = {
         flavor: number; // 1-10
         mouthfeel: number; // 1-10
         bubbles: number; // 1-10
+        bitterness: number; // 1-10
     };
     aroma_profile: AromaProfile;
     created_at: string;

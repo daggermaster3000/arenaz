@@ -25,7 +25,8 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
         aroma: 5,
         flavor: 5,
         mouthfeel: 5,
-        bubbles: 5
+        bubbles: 5,
+        bitterness: 5
     });
     const [aromaProfile, setAromaProfile] = useState<AromaProfile>(INITIAL_AROMA);
     const [comment, setComment] = useState("");
@@ -124,7 +125,7 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
 
             <div className="form-section">
                 <label className="section-label">aroma profiling (interactive wheel)</label>
-                <p className="section-desc">click or tap on the wheel to chart the flavor intensity across 12 scientific categories.</p>
+                <p className="section-desc">click or tap on the wheel to chart the flavor intensity across 12 categories.</p>
                 <div className="aroma-wheel-box">
                     <AromaWheel
                         data={aromaProfile}
@@ -136,7 +137,8 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
             </div>
 
             <div className="form-section">
-                <label className="section-label">scientific metrics</label>
+                <label className="section-label">metrics</label>
+                <p className="section-desc">assess on a scale of 1-10 the following metrics</p>
 
                 <MetricInput
                     label="bubbles & carbonation"
@@ -147,21 +149,21 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
 
                 <MetricInput
                     label="appearance"
-                    description="Color, clarity, and head retention. Look for the SRM (Standard Reference Method) color and head stability."
+                    description="Color, clarity, does it look nice?"
                     value={metrics.appearance}
                     onChange={(v) => setMetrics({ ...metrics, appearance: v })}
                 />
 
                 <MetricInput
                     label="aroma profile"
-                    description="Intensity and complexity of the scents. Identify malt sweetness, hop character, and fermentation byproducts."
+                    description="Intensity and complexity of the scents. Does it smell nice?"
                     value={metrics.aroma}
                     onChange={(v) => setMetrics({ ...metrics, aroma: v })}
                 />
 
                 <MetricInput
                     label="flavor balance"
-                    description="Interaction between malt sweetness and hop bitterness. Note any off-flavors or specific flavor compounds."
+                    description="Interaction between malt sweetness and hop bitterness. Note any off-flavors or specific flavor compounds. Does it taste nice?"
                     value={metrics.flavor}
                     onChange={(v) => setMetrics({ ...metrics, flavor: v })}
                 />
@@ -171,6 +173,13 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
                     description="The tactile sensation of the beer. Consider viscosity, astringency, and warmth from alcohol."
                     value={metrics.mouthfeel}
                     onChange={(v) => setMetrics({ ...metrics, mouthfeel: v })}
+                />
+
+                <MetricInput
+                    label="bitterness"
+                    description="Intensity and quality of the hop bitterness. Is it smooth, sharp, or lingering?"
+                    value={metrics.bitterness}
+                    onChange={(v) => setMetrics({ ...metrics, bitterness: v })}
                 />
             </div>
 

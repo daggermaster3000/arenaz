@@ -6,7 +6,7 @@ export default function Home() {
       <div className="container hero-content">
         <h1 className="hero-title">brasserie arénaz</h1>
         <p className="hero-subtitle">
-          scientific soul / swiss precision / craft brewing
+          craft brewing experiments
         </p>
         <div className="hero-actions">
           <Link href="/beers" className="btn btn-primary">

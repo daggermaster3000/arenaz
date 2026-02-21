@@ -141,7 +141,7 @@ export default function AdminDashboard() {
                                         const beer = beers.find(b => b.id === review.beer_id);
                                         const m = review.metrics;
                                         const avgMetric = (
-                                            (m.appearance + m.aroma + m.flavor + m.mouthfeel + m.bubbles) / 5
+                                            (m.appearance + m.aroma + m.flavor + m.mouthfeel + m.bubbles + (m.bitterness || 0)) / 6
                                         ).toFixed(1);
 
                                         return (
@@ -229,9 +229,9 @@ export default function AdminDashboard() {
                                         <div key={key} className="metric-row">
                                             <span className="metric-name">{key}</span>
                                             <div className="metric-bar-bg">
-                                                <div className="metric-bar-fill" style={{ width: `${(val as number) * 10}%` }}></div>
+                                                <div className="metric-bar-fill" style={{ width: `${((val as number) || 0) * 10}%` }}></div>
                                             </div>
-                                            <span className="metric-val">{val}/10</span>
+                                            <span className="metric-val">{(val as number) || 0}/10</span>
                                         </div>
                                     ))}
                                 </div>

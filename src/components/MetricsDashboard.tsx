@@ -62,8 +62,9 @@ export default function MetricsDashboard({ beers, reviews }: MetricsDashboardPro
             acc.flavor += r.metrics.flavor;
             acc.mouthfeel += r.metrics.mouthfeel;
             acc.bubbles += r.metrics.bubbles;
+            acc.bitterness += (r.metrics.bitterness || 0);
             return acc;
-        }, { appearance: 0, aroma: 0, flavor: 0, mouthfeel: 0, bubbles: 0 });
+        }, { appearance: 0, aroma: 0, flavor: 0, mouthfeel: 0, bubbles: 0, bitterness: 0 });
 
         Object.keys(meanMetrics).forEach(key => {
             (meanMetrics as any)[key] /= filteredReviews.length;
@@ -77,7 +78,7 @@ export default function MetricsDashboard({ beers, reviews }: MetricsDashboardPro
     const downloadCSV = () => {
         const headers = [
             "Review ID", "Beer Name", "Rating",
-            "Appearance", "Aroma", "Flavor", "Mouthfeel", "Bubbles",
+            "Appearance", "Aroma", "Flavor", "Mouthfeel", "Bubbles", "Bitterness",
             ...Object.keys(INITIAL_AROMA),
             "Reviewer Name", "Reviewer Sex", "Reviewer Age", "Date"
         ].join(",");
@@ -92,7 +93,7 @@ export default function MetricsDashboard({ beers, reviews }: MetricsDashboardPro
                 r.id,
                 `"${beer?.name || "unknown"}"`,
                 r.rating,
-                m.appearance, m.aroma, m.flavor, m.mouthfeel, m.bubbles,
+                m.appearance, m.aroma, m.flavor, m.mouthfeel, m.bubbles, m.bitterness || 0,
                 ...aromaValues,
                 `"${r.reviewer_name || ""}"`,
                 r.reviewer_sex || "",

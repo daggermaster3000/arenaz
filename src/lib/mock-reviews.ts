@@ -20,7 +20,8 @@ export const MOCK_REVIEWS: Review[] = [
             aroma: 10,
             flavor: 9,
             mouthfeel: 8,
-            bubbles: 9
+            bubbles: 9,
+            bitterness: 7
         },
         aroma_profile: { ...EMPTY_AROMA, citrus: 8, floral: 6 },
         created_at: new Date().toISOString()
@@ -38,7 +39,8 @@ export const MOCK_REVIEWS: Review[] = [
             aroma: 7,
             flavor: 8,
             mouthfeel: 10,
-            bubbles: 8
+            bubbles: 8,
+            bitterness: 4
         },
         aroma_profile: { ...EMPTY_AROMA, cream_caramel: 9, woody_aromatic: 5 },
         created_at: new Date().toISOString()
