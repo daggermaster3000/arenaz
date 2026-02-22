@@ -30,12 +30,12 @@ export default function SpiderGraph({ data, size = 300 }: SpiderGraphProps) {
     };
 
     // Background shapes
-    const bgPolygon = Array.from({ length: 5 }, (_, i) => {
+    const bgPolygon = Array.from({ length: 6 }, (_, i) => {
         const p = getPoint(maxValue, i);
         return `${p.x},${p.y}`;
     }).join(" ");
 
-    const midPolygon = Array.from({ length: 5 }, (_, i) => {
+    const midPolygon = Array.from({ length: 6 }, (_, i) => {
         const p = getPoint(maxValue / 2, i);
         return `${p.x},${p.y}`;
     }).join(" ");
