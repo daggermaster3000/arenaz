@@ -17,18 +17,18 @@ export type Beer = {
 };
 
 export type AromaProfile = {
-    menthol: number;
-    tea: number;
-    green_fruits: number;
+    earthy: number;
+    sour_acidic: number;
+    sweet: number;
+    bitter: number;
+    spicy: number;
+    light_grain: number;
+    dark_grain: number;
     citrus: number;
-    green: number;
-    vegetal: number;
-    cream_caramel: number;
-    woody_aromatic: number;
-    spicy_herbal: number;
-    red_berries: number;
-    sweet_fruits: number;
+    berry: number;
+    tropical: number;
     floral: number;
+    nutty: number;
 };
 
 export type Review = {

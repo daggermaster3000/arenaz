@@ -11,24 +11,24 @@ interface AromaWheelProps {
 }
 
 const CATEGORIES: (keyof AromaProfile)[] = [
-    "menthol", "tea", "green_fruits", "citrus",
-    "green", "vegetal", "cream_caramel", "woody_aromatic",
-    "spicy_herbal", "red_berries", "sweet_fruits", "floral"
+    "earthy", "sour_acidic", "sweet", "bitter",
+    "spicy", "light_grain", "dark_grain", "citrus",
+    "berry", "tropical", "floral", "nutty"
 ];
 
 const DISPLAY_NAMES: Record<keyof AromaProfile, string> = {
-    menthol: "menthol",
-    tea: "tea",
-    green_fruits: "green fruits",
+    earthy: "earthy",
+    sour_acidic: "acidic (sour)",
+    sweet: "sweet",
+    bitter: "bitter",
+    spicy: "spicy",
+    light_grain: "light grain",
+    dark_grain: "dark grain",
     citrus: "citrus",
-    green: "green",
-    vegetal: "vegetal",
-    cream_caramel: "cream caramel",
-    woody_aromatic: "woody aromatic",
-    spicy_herbal: "spicy/herbal",
-    red_berries: "red berries",
-    sweet_fruits: "sweet fruits",
-    floral: "floral"
+    berry: "berry",
+    tropical: "tropical",
+    floral: "floral",
+    nutty: "nutty"
 };
 
 export default function AromaWheel({ data, onChange, size = 400, interactive = false }: AromaWheelProps) {
