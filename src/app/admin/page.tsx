@@ -6,8 +6,10 @@ import AromaWheel from "@/components/AromaWheel";
 import MetricsDashboard from "@/components/MetricsDashboard";
 import BeerManagement from "@/components/BeerManagement";
 import SpiderGraph from "@/components/SpiderGraph";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/utils/supabase/client";
 import { Beer, Review } from "@/types";
+import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
 
 export default function AdminDashboard() {
     const [reviews, setReviews] = useState<Review[]>([]);
@@ -16,6 +18,14 @@ export default function AdminDashboard() {
     const [error, setError] = useState<string | null>(null);
     const [selectedReview, setSelectedReview] = useState<Review | null>(null);
     const [activeTab, setActiveTab] = useState<"evaluations" | "metrics">("evaluations");
+    const router = useRouter();
+    const supabase = createClient();
+
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        router.push("/login");
+        router.refresh();
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -77,11 +87,20 @@ export default function AdminDashboard() {
 
     return (
         <div className="container py-16">
-            <header className="page-header">
-                <h1 className="page-title">admin dashboard</h1>
-                <p className="page-description">
-                    monitoring scientific feedback and brewery performance.
-                </p>
+            <header className="page-header flex justify-between items-start">
+                <div>
+                    <h1 className="page-title">admin dashboard</h1>
+                    <p className="page-description">
+                        monitoring scientific feedback and brewery performance.
+                    </p>
+                </div>
+                <button
+                    onClick={handleLogout}
+                    className="btn btn-secondary flex items-center gap-2 opacity-60 hover:opacity-100 transition-opacity"
+                >
+                    <LogOut size={16} />
+                    <span>logout</span>
+                </button>
             </header>
 
             <div className="stats-grid">

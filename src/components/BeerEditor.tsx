@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { X, Upload, Loader2, Save } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/utils/supabase/client";
 import { Beer } from "@/types";
 
 interface BeerEditorProps {
@@ -14,6 +14,7 @@ interface BeerEditorProps {
 export default function BeerEditor({ beer, onClose, onSave }: BeerEditorProps) {
     const [loading, setLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
+    const supabase = createClient();
 
     const [formData, setFormData] = useState<Partial<Beer>>({
         id: "",
@@ -42,7 +43,7 @@ export default function BeerEditor({ beer, onClose, onSave }: BeerEditorProps) {
 
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (!file || !supabase) return;
+        if (!file) return;
 
         setUploading(true);
         try {
@@ -70,7 +71,6 @@ export default function BeerEditor({ beer, onClose, onSave }: BeerEditorProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!supabase) return;
 
         setLoading(true);
         try {

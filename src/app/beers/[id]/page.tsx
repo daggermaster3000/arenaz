@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Beaker, Eye, Droplets, Utensils, Wind, Loader2 } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { ArrowLeft, Beaker, Eye, Droplets, Utensils, Wind, Loader2, Star } from "lucide-react";
+import { createClient } from "@/utils/supabase/client";
 import { Beer, Review, AromaProfile } from "@/types";
 import AromaWheel from "@/components/AromaWheel";
 
@@ -19,13 +19,11 @@ export default function BeerDetailPage({ params }: { params: Promise<{ id: strin
     const [beer, setBeer] = useState<Beer | null>(null);
     const [reviews, setReviews] = useState<Review[]>([]);
     const [loading, setLoading] = useState(true);
+    const supabase = createClient();
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!supabase) {
-                setLoading(false);
-                return;
-            }
+            setLoading(true);
 
             // Fetch beer
             const { data: beerData } = await supabase
@@ -127,8 +125,18 @@ export default function BeerDetailPage({ params }: { params: Promise<{ id: strin
 
                 <div className="beer-content">
                     <header className="detail-header">
-                        <span className="style-tag">{beer.style}</span>
-                        <h1 className="detail-title">{beer.name}</h1>
+                        <div className="flex justify-between items-start">
+                            <div>
+                                <span className="style-tag">{beer.style}</span>
+                                <h1 className="detail-title">{beer.name}</h1>
+                            </div>
+                            {hasReviews && (
+                                <div className="beer-rating flex items-center gap-2 text-xl font-bold mt-4">
+                                    <Star size={20} fill="currentColor" />
+                                    <span>{(reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)}</span>
+                                </div>
+                            )}
+                        </div>
                         <p className="detail-abv">{beer.abv}% alcohol by volume</p>
                     </header>
 

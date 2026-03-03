@@ -124,17 +124,42 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
             </div>
 
             <div className="form-section">
-                <label className="section-label">aroma profiling (interactive wheel)</label>
-                <p className="section-desc">click or tap on the wheel to chart the flavor intensity across 12 categories.</p>
-                <div className="aroma-wheel-box">
-                    <AromaWheel
-                        data={aromaProfile}
-                        onChange={setAromaProfile}
-                        size={320}
-                        interactive={true}
-                    />
+                <label className="section-label">aroma profiling</label>
+                <p className="section-desc">precisely tune the flavor intensity across 12 scientific categories.</p>
+
+                <div className="aroma-interactive-container">
+                    <div className="aroma-wheel-box">
+                        <AromaWheel
+                            data={aromaProfile}
+                            size={320}
+                            interactive={false}
+                        />
+                    </div>
+
+                    <div className="aroma-sliders-grid">
+                        {Object.entries(aromaProfile).map(([key, value]) => (
+                            <div key={key} className="aroma-slider-item">
+                                <label className="aroma-slider-label">
+                                    <span>{key.replace('_', ' ')}</span>
+                                    <span className="aroma-val">{value}</span>
+                                </label>
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="10"
+                                    value={value}
+                                    onChange={(e) => setAromaProfile({
+                                        ...aromaProfile,
+                                        [key]: parseInt(e.target.value)
+                                    })}
+                                    className="aroma-range-input"
+                                />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
+
 
             <div className="form-section">
                 <label className="section-label">metrics</label>
@@ -254,6 +279,62 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
                     border: 1px solid var(--border);
                     display: flex;
                     justify-content: center;
+                    flex: 1;
+                }
+                .aroma-interactive-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: var(--space-6);
+                }
+                @media (min-width: 768px) {
+                    .aroma-interactive-container {
+                        flex-direction: row;
+                        align-items: flex-start;
+                    }
+                }
+                .aroma-sliders-grid {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: var(--space-3) var(--space-6);
+                    flex: 1.2;
+                }
+                .aroma-slider-item {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2px;
+                }
+                .aroma-slider-label {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 0.7rem;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                    opacity: 0.6;
+                }
+                .aroma-val {
+                    opacity: 1;
+                    color: var(--accent);
+                }
+                .aroma-range-input {
+                    -webkit-appearance: none;
+                    width: 100%;
+                    height: 2px;
+                    background: var(--border);
+                    outline: none;
+                    margin: 8px 0;
+                }
+                .aroma-range-input::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    width: 10px;
+                    height: 10px;
+                    background: var(--fg);
+                    border-radius: 50%;
+                    cursor: pointer;
+                    transition: transform 0.1s ease;
+                }
+                .aroma-range-input::-webkit-slider-thumb:hover {
+                    transform: scale(1.3);
                 }
                 .comment-area {
                     width: 100%;

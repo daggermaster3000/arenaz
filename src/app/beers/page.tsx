@@ -2,36 +2,39 @@
 
 import { useState, useEffect } from "react";
 import BeerCard from "@/components/BeerCard";
-import { supabase } from "@/lib/supabase";
-import { Beer } from "@/types";
+import { createClient } from "@/utils/supabase/client";
+import { Beer, Review } from "@/types";
 import { Loader2 } from "lucide-react";
 
 export default function BeersPage() {
   const [beers, setBeers] = useState<Beer[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const supabase = createClient();
 
   useEffect(() => {
-    const fetchBeers = async () => {
-      if (!supabase) {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const [beersRes, reviewsRes] = await Promise.all([
+          supabase.from("beers").select("*").order("name"),
+          supabase.from("reviews").select("beer_id, rating")
+        ]);
+
+        if (beersRes.error) throw beersRes.error;
+        if (reviewsRes.error) throw reviewsRes.error;
+
+        setBeers(beersRes.data || []);
+        setReviews(reviewsRes.data as any || []);
+      } catch (err: any) {
+        console.error("BeersPage fetch error:", err);
+        setError(err.message);
+      } finally {
         setLoading(false);
-        return;
       }
-      const { data, error } = await supabase.from("beers").select("*").order("name");
-      if (error) {
-        console.error("BeersPage fetch error:", {
-          message: error.message,
-          code: error.code,
-          details: error.details,
-          hint: error.hint
-        });
-        setError(error.message);
-      } else if (data) {
-        setBeers(data);
-      }
-      setLoading(false);
     };
-    fetchBeers();
+    fetchData();
   }, []);
 
   if (loading) {
@@ -58,9 +61,14 @@ export default function BeersPage() {
             <p className="text-sm opacity-30 mt-2">{error}</p>
           </div>
         )}
-        {beers.map((beer) => (
-          <BeerCard key={beer.id} beer={beer} />
-        ))}
+        {beers.map((beer) => {
+          const beerReviews = reviews.filter(r => r.beer_id === beer.id);
+          const avgRating = beerReviews.length > 0
+            ? beerReviews.reduce((acc, r) => acc + r.rating, 0) / beerReviews.length
+            : 0;
+
+          return <BeerCard key={beer.id} beer={beer} averageRating={avgRating} />;
+        })}
         {!error && beers.length === 0 && (
           <p className="empty-message col-span-full">no beers available in the database.</p>
         )}

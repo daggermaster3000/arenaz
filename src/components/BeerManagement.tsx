@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Plus, Trash2, Edit2, Loader2 } from "lucide-react";
 import { Beer } from "@/types";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/utils/supabase/client";
 import BeerEditor from "./BeerEditor";
 
 export default function BeerManagement() {
@@ -12,6 +12,7 @@ export default function BeerManagement() {
   const [isAdding, setIsAdding] = useState(false);
   const [editingBeer, setEditingBeer] = useState<Beer | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const supabase = createClient();
 
   const fetchBeers = async () => {
     if (!supabase) {
@@ -38,7 +39,7 @@ export default function BeerManagement() {
   }, []);
 
   const handleDelete = async (id: string) => {
-    if (!supabase || !confirm("Are you sure you want to delete this beer?")) return;
+    if (!confirm("Are you sure you want to delete this beer?")) return;
 
     const { error } = await supabase.from("beers").delete().eq("id", id);
     if (!error) {
