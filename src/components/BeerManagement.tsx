@@ -55,65 +55,67 @@ export default function BeerManagement() {
 
   return (
     <div className="beer-management">
-      <div className="section-header">
-        <h2 className="section-title">inventory management</h2>
-        <button
-          className="btn btn-primary btn-sm"
-          onClick={() => setIsAdding(true)}
-        >
-          <Plus size={14} />
-          <span>add new beer</span>
-        </button>
-      </div>
+      <div className="management-container">
+        <div className="section-header">
+          <h2 className="section-title">inventory management</h2>
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => setIsAdding(true)}
+          >
+            <Plus size={14} />
+            <span>add new beer</span>
+          </button>
+        </div>
 
-      <div className="table-wrapper">
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>beer</th>
-              <th>style</th>
-              <th>abv</th>
-              <th className="text-right">actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {beers.map((beer) => (
-              <tr key={beer.id}>
-                <td>
-                  <div className="beer-cell">
-                    <img src={beer.label_url} alt={beer.name} className="admin-thumb" />
-                    <span className="font-bold">{beer.name}</span>
-                  </div>
-                </td>
-                <td>{beer.style}</td>
-                <td>{beer.abv}%</td>
-                <td className="text-right">
-                  <div className="action-btns">
-                    <button
-                      className="btn-text"
-                      onClick={() => setEditingBeer(beer)}
-                      title="Edit beer"
-                    >
-                      <Edit2 size={14} />
-                      <span>edit</span>
-                    </button>
-                    <button
-                      className="btn-text danger"
-                      onClick={() => handleDelete(beer.id)}
-                      title="Remove beer"
-                    >
-                      <Trash2 size={14} />
-                      <span>remove</span>
-                    </button>
-                  </div>
-                </td>
+        <div className="table-wrapper">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>beer</th>
+                <th>style</th>
+                <th>abv</th>
+                <th className="text-right">actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        {beers.length === 0 && !error && (
-          <p className="py-8 text-center opacity-30">no beers in database.</p>
-        )}
+            </thead>
+            <tbody>
+              {beers.map((beer) => (
+                <tr key={beer.id}>
+                  <td>
+                    <div className="beer-cell">
+                      <img src={beer.label_url} alt={beer.name} className="admin-thumb" />
+                      <span className="font-bold">{beer.name}</span>
+                    </div>
+                  </td>
+                  <td>{beer.style}</td>
+                  <td>{beer.abv}%</td>
+                  <td className="text-right">
+                    <div className="action-btns">
+                      <button
+                        className="btn-text"
+                        onClick={() => setEditingBeer(beer)}
+                        title="Edit beer"
+                      >
+                        <Edit2 size={14} />
+                        <span>edit</span>
+                      </button>
+                      <button
+                        className="btn-text danger"
+                        onClick={() => handleDelete(beer.id)}
+                        title="Remove beer"
+                      >
+                        <Trash2 size={14} />
+                        <span>remove</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {beers.length === 0 && !error && (
+            <p className="py-8 text-center opacity-30">no beers in database.</p>
+          )}
+        </div>
       </div>
 
       {(isAdding || editingBeer) && (
@@ -155,6 +157,14 @@ export default function BeerManagement() {
         .table-wrapper {
           border: 1px solid var(--border);
           background: var(--bg);
+        }
+        .management-container {
+          padding: 0;
+        }
+        @media (max-width: 768px) {
+          .management-container {
+            padding: 0 var(--space-4);
+          }
         }
         .admin-table {
           width: 100%;

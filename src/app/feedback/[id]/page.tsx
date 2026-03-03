@@ -51,7 +51,7 @@ export default function FeedbackPage({ params }: { params: Promise<{ id: string 
           <span className="style-tag">feedback / {beer.name}</span>
           <h1 className="page-title">tasting scorecard</h1>
           <p className="page-description">
-            please provide your objective evaluation according to the following scientific metrics.
+            please provide your objective evaluation according to the following metrics.
           </p>
         </header>
 
@@ -59,7 +59,10 @@ export default function FeedbackPage({ params }: { params: Promise<{ id: string 
       </div>
 
       <style jsx>{`
-        .py-16 { padding: var(--space-16) 0; }
+        .py-16 { padding: var(--space-8) 0; }
+        @media (min-width: 768px) {
+          .py-16 { padding: var(--space-16) 0; }
+        }
         .feedback-layout {
           max-width: 600px;
           margin: 0 auto;

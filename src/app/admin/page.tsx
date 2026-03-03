@@ -433,6 +433,16 @@ export default function AdminDashboard() {
         .metric-bar-bg { height: 4px; background: var(--muted); border-radius: 2px; }
         .metric-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; }
         .metric-val { font-size: 0.75rem; font-weight: 700; text-align: right; }
+        .container.py-16 {
+          padding-top: var(--space-8);
+          padding-bottom: var(--space-8);
+        }
+        @media (min-width: 768px) {
+          .container.py-16 {
+            padding-top: var(--space-16);
+            padding-bottom: var(--space-16);
+          }
+        }
       `}</style>
         </div>
     );

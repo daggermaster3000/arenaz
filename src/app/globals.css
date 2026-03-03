@@ -21,16 +21,24 @@
 
   /* Layout */
   --max-width: 1200px;
-  --container-px: 1.5rem;
+  --container-px: 1rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --container-px: 2rem;
+    --space-12: 4rem;
+    --space-16: 6rem;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-  --bg: #ffffff;
-  --fg: #555555;
-  --muted: #f5f5f7;
-  --border: #e1e1e3;
-  --accent: #000000;
+    --bg: #ffffff;
+    --fg: #555555;
+    --muted: #f5f5f7;
+    --border: #e1e1e3;
+    --accent: #000000;
   }
 }
 
@@ -175,12 +183,13 @@ button {
 }
 
 .hero-title {
-  font-size: clamp(3rem, 12vw, 8rem);
+  font-size: clamp(2.5rem, 10vw, 8rem);
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 0.9;
   margin-bottom: var(--space-6);
   text-transform: lowercase;
+  padding: 0 1rem;
 }
 
 .hero-subtitle {

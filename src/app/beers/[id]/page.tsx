@@ -115,7 +115,7 @@ export default function BeerDetailPage({ params }: { params: Promise<{ id: strin
                         {hasReviews ? (
                             <div className="wheel-box">
                                 <AromaWheel data={meanAroma} size={300} interactive={false} />
-                                <p className="review-count">based on {reviews.length} scientific evaluations</p>
+                                <p className="review-count">based on {reviews.length} evaluations</p>
                             </div>
                         ) : (
                             <p className="no-data">be the first to chart this beer's profile.</p>
@@ -145,7 +145,7 @@ export default function BeerDetailPage({ params }: { params: Promise<{ id: strin
                     </div>
 
                     <div className="scientific-section">
-                        <h2 className="section-title">brewer's scientific profile</h2>
+                        <h2 className="section-title">brewer's profile</h2>
                         <div className="profile-grid">
                             <div className="profile-item">
                                 <div className="profile-icon"><Eye size={18} /></div>
@@ -194,7 +194,10 @@ export default function BeerDetailPage({ params }: { params: Promise<{ id: strin
             </div>
 
             <style jsx>{`
-        .py-16 { padding: var(--space-16) 0; }
+        .py-16 { padding: var(--space-8) 0; }
+        @media (min-width: 768px) {
+          .py-16 { padding: var(--space-16) 0; }
+        }
         .back-link {
           display: inline-flex;
           align-items: center;

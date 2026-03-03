@@ -76,8 +76,14 @@ export default function BeersPage() {
 
       <style jsx>{`
         .py-16 {
-          padding-top: var(--space-16);
-          padding-bottom: var(--space-16);
+          padding-top: var(--space-8);
+          padding-bottom: var(--space-8);
+        }
+        @media (min-width: 768px) {
+          .py-16 {
+            padding-top: var(--space-16);
+            padding-bottom: var(--space-16);
+          }
         }
         .page-header {
           margin-bottom: var(--space-12);
