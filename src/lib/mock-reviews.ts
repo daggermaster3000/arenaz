@@ -1,9 +1,9 @@
 import { Review } from "@/types";
 
 const EMPTY_AROMA = {
-    menthol: 0, tea: 0, green_fruits: 0, citrus: 0,
-    green: 0, vegetal: 0, cream_caramel: 0, woody_aromatic: 0,
-    spicy_herbal: 0, red_berries: 0, sweet_fruits: 0, floral: 0
+    earthy: 0, sour_acidic: 0, sweet: 0, bitter: 0,
+    spicy: 0, light_grain: 0, dark_grain: 0, citrus: 0,
+    berry: 0, tropical: 0, floral: 0, nutty: 0
 };
 
 export const MOCK_REVIEWS: Review[] = [
@@ -42,7 +42,7 @@ export const MOCK_REVIEWS: Review[] = [
             bubbles: 8,
             bitterness: 4
         },
-        aroma_profile: { ...EMPTY_AROMA, cream_caramel: 9, woody_aromatic: 5 },
+        aroma_profile: { ...EMPTY_AROMA, light_grain: 9, earthy: 5 },
         created_at: new Date().toISOString()
     }
 ];
