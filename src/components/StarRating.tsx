@@ -31,18 +31,6 @@ export default function StarRating({ rating, onRatingChange, size = 24 }: StarRa
           />
         </button>
       ))}
-      <style jsx>{`
-        .star-rating {
-          display: flex;
-          gap: var(--space-2);
-        }
-        .star-button {
-          transition: transform 0.1s ease;
-        }
-        .star-button:hover {
-          transform: scale(1.1);
-        }
-      `}</style>
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Beaker, Eye, Droplets, Utensils, Wind, Loader2, Star } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { Beer, Review, AromaProfile } from "@/types";
@@ -107,7 +108,14 @@ export default function BeerDetailPage({ params }: { params: Promise<{ id: strin
             <div className="beer-detail-grid">
                 <div className="beer-visual">
                     <div className="image-wrapper">
-                        <img src={beer.label_url} alt={beer.name} className="label-display" />
+                        <Image
+                            src={beer.label_url}
+                            alt={beer.name}
+                            className="label-display"
+                            fill
+                            sizes="(max-width: 768px) 100vw, 40vw"
+                            unoptimized
+                        />
                     </div>
 
                     <div className="aggregation-section">
@@ -192,100 +200,6 @@ export default function BeerDetailPage({ params }: { params: Promise<{ id: strin
                     </div>
                 </div>
             </div>
-
-            <style jsx>{`
-        .py-16 { padding: var(--space-8) 0; }
-        @media (min-width: 768px) {
-          .py-16 { padding: var(--space-16) 0; }
-        }
-        .back-link {
-          display: inline-flex;
-          align-items: center;
-          gap: var(--space-2);
-          font-size: 0.875rem;
-          opacity: 0.6;
-          margin-bottom: var(--space-12);
-          transition: opacity 0.2s ease;
-          text-transform: lowercase;
-        }
-        .back-link:hover { opacity: 1; }
-        .beer-detail-grid {
-          display: grid;
-          gap: var(--space-16);
-        }
-        @media (min-width: 768px) {
-          .beer-detail-grid { grid-template-columns: 1fr 1.5fr; }
-        }
-        .image-wrapper {
-          aspect-ratio: 1;
-          background: var(--muted);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid var(--border);
-        }
-        .label-display { max-width: 80%; max-height: 80%; object-fit: contain; }
-        .style-tag {
-          font-size: 0.75rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          opacity: 0.5;
-        }
-        .detail-title {
-          font-size: 4rem;
-          font-weight: 800;
-          line-height: 1;
-          margin: var(--space-2) 0;
-          text-transform: lowercase;
-          letter-spacing: -0.04em;
-        }
-        .detail-abv { font-size: 1.25rem; opacity: 0.6; }
-        .detail-description { font-size: 1.125rem; margin: var(--space-8) 0; line-height: 1.6; }
-        
-        .aggregation-section {
-          margin-top: var(--space-12);
-        }
-        .wheel-box {
-          background: var(--muted);
-          padding: var(--space-8) var(--space-4);
-          border: 1px solid var(--border);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-        .review-count {
-          font-size: 0.75rem;
-          opacity: 0.5;
-          margin-top: var(--space-4);
-          font-weight: 600;
-          text-transform: lowercase;
-        }
-        .no-data {
-          font-size: 0.875rem;
-          opacity: 0.5;
-          font-style: italic;
-        }
-
-        .scientific-section {
-          background: var(--muted);
-          padding: var(--space-8);
-          border-radius: 4px;
-        }
-        .section-title {
-          font-size: 0.75rem;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          margin-bottom: var(--space-6);
-          opacity: 0.4;
-        }
-        .profile-grid { display: grid; gap: var(--space-6); }
-        .profile-item { display: flex; gap: var(--space-4); }
-        .profile-icon { opacity: 0.4; padding-top: 2px; }
-        .profile-item h3 { font-size: 0.875rem; font-weight: 700; margin-bottom: 2px; text-transform: lowercase; }
-        .profile-item p { font-size: 0.875rem; opacity: 0.8; }
-        .detail-actions { margin-top: var(--space-12); }
-      `}</style>
         </div>
     );
 }

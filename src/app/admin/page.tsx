@@ -86,7 +86,7 @@ export default function AdminDashboard() {
         : "0.0";
 
     return (
-        <div className="container py-16">
+        <div className="container admin-page py-16">
             <header className="page-header flex justify-between items-start">
                 <div>
                     <h1 className="page-title">admin dashboard</h1>
@@ -201,18 +201,18 @@ export default function AdminDashboard() {
 
             {/* Review Details Overlay */}
             {selectedReview && (
-                <div className="overlay" onClick={() => setSelectedReview(null)}>
-                    <div className="overlay-content" onClick={e => e.stopPropagation()}>
-                        <button className="close-btn" onClick={() => setSelectedReview(null)}>
+                <div className="admin-overlay" onClick={() => setSelectedReview(null)}>
+                    <div className="admin-overlay-content" onClick={e => e.stopPropagation()}>
+                        <button className="admin-close-btn" onClick={() => setSelectedReview(null)}>
                             <X size={20} />
                         </button>
 
-                        <header className="overlay-header">
-                            <span className="style-tag">evaluation detail</span>
-                            <h2 className="overlay-title">
+                        <header className="admin-overlay-header">
+                            <span className="admin-style-tag">evaluation detail</span>
+                            <h2 className="admin-overlay-title">
                                 {beers.find(b => b.id === selectedReview.beer_id)?.name || "unknown beer"}
                             </h2>
-                            <div className="overlay-meta">
+                            <div className="admin-overlay-meta">
                                 <div className="rating-cell large">
                                     <Star size={16} fill="currentColor" />
                                     <span>{selectedReview.rating} / 5</span>
@@ -228,7 +228,7 @@ export default function AdminDashboard() {
                             )}
                         </header>
 
-                        <div className="overlay-grid">
+                            <div className="admin-overlay-grid">
                             <div className="graph-col">
                                 <h3 className="section-label">scientific metrics</h3>
                                 <SpiderGraph data={selectedReview.metrics} size={260} />
@@ -260,190 +260,6 @@ export default function AdminDashboard() {
                 </div>
             )}
 
-            <style jsx>{`
-        .py-16 { padding: var(--space-16) 0; }
-        .page-header { margin-bottom: var(--space-12); }
-        .page-title { font-size: 3rem; font-weight: 800; text-transform: lowercase; }
-        .page-description { opacity: 0.8; }
-        
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: var(--space-6);
-          margin-bottom: var(--space-12);
-        }
-        .stat-card {
-          padding: var(--space-6);
-          border: 1px solid var(--border);
-          background: var(--muted);
-        }
-        .stat-card label {
-          font-size: 0.75rem;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          opacity: 0.7;
-          font-weight: 700;
-        }
-        .stat-value {
-          font-size: 2.5rem;
-          font-weight: 800;
-          margin-top: var(--space-2);
-        }
-
-        .admin-tabs {
-            display: flex;
-            gap: var(--space-8);
-            margin-bottom: var(--space-8);
-            border-bottom: 1px solid var(--border);
-        }
-        .tab-btn {
-            padding: var(--space-4) 0;
-            font-size: 0.875rem;
-            font-weight: 700;
-            text-transform: lowercase;
-            opacity: 0.4;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-        .tab-btn.active {
-            opacity: 1;
-        }
-        .tab-btn.active::after {
-            content: "";
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--accent);
-        }
-        
-        .section-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: var(--space-6);
-        }
-        .section-title {
-          font-size: 1.25rem;
-          font-weight: 700;
-          text-transform: lowercase;
-        }
-        
-        .admin-table {
-          width: 100%;
-          border-collapse: collapse;
-          font-size: 0.875rem;
-        }
-        .admin-table th {
-          text-align: left;
-          padding: var(--space-4);
-          border-bottom: 2px solid var(--border);
-          text-transform: uppercase;
-          font-size: 0.75rem;
-          letter-spacing: 0.1em;
-          opacity: 0.8;
-        }
-        .admin-table td {
-          padding: var(--space-4);
-          border-bottom: 1px solid var(--border);
-        }
-        .font-bold { font-weight: 700; text-transform: lowercase; }
-        .rating-cell { display: flex; align-items: center; gap: var(--space-1); }
-        .rating-cell.large { font-size: 1.25rem; font-weight: 800; color: var(--accent); }
-        .text-btn {
-          font-size: 0.75rem;
-          text-decoration: underline;
-          color: var(--fg);
-          opacity: 0.8;
-          text-transform: lowercase;
-        }
-        .text-btn:hover { opacity: 1; }
-        .btn-sm {
-          display: inline-flex;
-          align-items: center;
-          gap: var(--space-2);
-          padding: var(--space-2) var(--space-4);
-        }
-
-        /* Overlay Styles */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(4px);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: var(--space-4);
-        }
-        .overlay-content {
-            background: var(--bg);
-            width: 100%;
-            max-width: 800px;
-            padding: var(--space-10);
-            position: relative;
-            border: 1px solid var(--border);
-        }
-        .close-btn {
-            position: absolute;
-            top: var(--space-4);
-            right: var(--space-4);
-            opacity: 0.4;
-        }
-        .close-btn:hover { opacity: 1; }
-        .overlay-header { margin-bottom: var(--space-8); }
-        .style-tag { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5; }
-        .overlay-title { font-size: 2.5rem; font-weight: 800; text-transform: lowercase; margin: var(--space-1) 0; }
-        .overlay-meta { display: flex; align-items: center; gap: var(--space-6); margin-bottom: var(--space-4); }
-        .date { font-size: 0.875rem; opacity: 0.7; }
-        .reviewer-info { display: flex; gap: var(--space-3); align-items: center; opacity: 0.7; font-size: 0.875rem; }
-        .reviewer-name { font-weight: 700; text-transform: lowercase; }
-        .reviewer-tag { font-size: 0.75rem; background: var(--muted); padding: 2px 8px; border-radius: 100px; text-transform: lowercase; }
-        .mt-8 { margin-top: var(--space-8); }
-        
-        .overlay-grid {
-            display: grid;
-            gap: var(--space-10);
-        }
-        @media (min-width: 768px) {
-            .overlay-grid { grid-template-columns: 1fr 1fr; }
-        }
-        
-        .section-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            opacity: 0.7;
-            margin-bottom: var(--space-4);
-        }
-        .comment-text {
-            font-size: 1.125rem;
-            line-height: 1.6;
-            margin-bottom: var(--space-8);
-        }
-        
-        .metrics-list { display: grid; gap: var(--space-3); }
-        .metric-row { display: grid; grid-template-columns: 80px 1fr 40px; align-items: center; gap: var(--space-4); }
-        .metric-name { font-size: 0.75rem; font-weight: 700; text-transform: lowercase; opacity: 0.6; }
-        .metric-bar-bg { height: 4px; background: var(--muted); border-radius: 2px; }
-        .metric-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; }
-        .metric-val { font-size: 0.75rem; font-weight: 700; text-align: right; }
-        .container.py-16 {
-          padding-top: var(--space-8);
-          padding-bottom: var(--space-8);
-        }
-        @media (min-width: 768px) {
-          .container.py-16 {
-            padding-top: var(--space-16);
-            padding-bottom: var(--space-16);
-          }
-        }
-      `}</style>
         </div>
     );
 }

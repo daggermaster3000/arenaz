@@ -156,54 +156,6 @@ export default function AromaWheel({ data, onChange, size = 400, interactive = f
                     );
                 })}
             </svg>
-
-            <style jsx>{`
-                .aroma-wheel-container {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    touch-action: none;
-                }
-                svg.interactive {
-                    cursor: crosshair;
-                }
-                .grid-circle {
-                    fill: none;
-                    stroke: var(--fg);
-                    stroke-width: 1;
-                    opacity: 0.2;
-                    stroke-dasharray: 2;
-                }
-                .axis-line {
-                    stroke: var(--fg);
-                    stroke-width: 1.5;
-                    opacity: 0.15;
-                }
-                .data-shape {
-                    fill: #a28ab1ff; /* Sage green */
-                    fill-opacity: 0.2;
-                    stroke: #936ab3ff;
-                    stroke-width: 2.5;
-                    transition: all 0.2s ease;
-                }
-                .data-point-invisible {
-                    fill: transparent;
-                    cursor: pointer;
-                }
-                .graph-label {
-                    font-size: 8px;
-                    font-weight: 800;
-                    text-transform: uppercase;
-                    letter-spacing: 0.05em;
-                    fill: var(--fg);
-                }
-                .scale-number {
-                    font-size: 9px;
-                    font-weight: 700;
-                    fill: var(--fg);
-                    opacity: 0.4;
-                }
-            `}</style>
         </div>
     );
 }

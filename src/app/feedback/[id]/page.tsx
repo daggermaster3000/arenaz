@@ -45,7 +45,7 @@ export default function FeedbackPage({ params }: { params: Promise<{ id: string 
   }
 
   return (
-    <div className="container py-16">
+    <div className="container feedback-page py-16">
       <div className="feedback-layout">
         <header className="page-header">
           <span className="style-tag">feedback / {beer.name}</span>
@@ -57,38 +57,6 @@ export default function FeedbackPage({ params }: { params: Promise<{ id: string 
 
         <FeedbackForm beer={beer} />
       </div>
-
-      <style jsx>{`
-        .py-16 { padding: var(--space-8) 0; }
-        @media (min-width: 768px) {
-          .py-16 { padding: var(--space-16) 0; }
-        }
-        .feedback-layout {
-          max-width: 600px;
-          margin: 0 auto;
-        }
-        .page-header {
-          margin-bottom: var(--space-12);
-        }
-        .style-tag {
-          font-size: 0.75rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          opacity: 0.5;
-        }
-        .page-title {
-          font-size: 3rem;
-          font-weight: 800;
-          letter-spacing: -0.03em;
-          margin: var(--space-2) 0;
-          text-transform: lowercase;
-        }
-        .page-description {
-          font-size: 1rem;
-          opacity: 0.6;
-        }
-      `}</style>
     </div>
   );
 }

@@ -36,7 +36,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="container min-h-[80vh] flex items-center justify-center">
+        <div className="container login-page min-h-[80vh] flex items-center justify-center">
             <div className="login-card w-full max-w-md">
                 <header className="mb-12 text-center">
                     <span className="text-xs font-bold uppercase tracking-widest opacity-40 mb-4 block">secure access</span>
@@ -97,18 +97,6 @@ export default function LoginPage() {
                     </p>
                 </footer>
             </div>
-
-            <style jsx>{`
-                .login-card {
-                    padding: var(--space-8);
-                }
-                @media (min-width: 640px) {
-                    .login-card {
-                        border: 1px solid var(--border);
-                        background: var(--bg);
-                    }
-                }
-            `}</style>
         </div>
     );
 }

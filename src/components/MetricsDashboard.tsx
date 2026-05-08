@@ -4,7 +4,7 @@ import React, { useState, useMemo } from "react";
 import { Beer, Review, AromaProfile } from "@/types";
 import SpiderGraph from "./SpiderGraph";
 import AromaWheel from "./AromaWheel";
-import { Download, Filter, User, BarChart3 } from "lucide-react";
+import { Download, Filter, BarChart3 } from "lucide-react";
 
 interface MetricsDashboardProps {
     beers: Beer[];
@@ -192,116 +192,6 @@ export default function MetricsDashboard({ beers, reviews }: MetricsDashboardPro
                     <p>no evaluations match your current filters.</p>
                 </div>
             )}
-
-            <style jsx>{`
-                .metrics-dashboard {
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--space-8);
-                }
-                .dashboard-controls {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: flex-end;
-                    background: var(--muted);
-                    padding: var(--space-6);
-                    border: 1px solid var(--border);
-                }
-                .filters-group {
-                    display: flex;
-                    gap: var(--space-6);
-                }
-                .filter-item {
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--space-2);
-                }
-                .filter-item label {
-                    font-size: 0.75rem;
-                    text-transform: uppercase;
-                    letter-spacing: 0.1em;
-                    opacity: 0.6;
-                    font-weight: 700;
-                }
-                .filter-item select {
-                    background: var(--bg);
-                    border: 1px solid var(--border);
-                    padding: var(--space-2) var(--space-4);
-                    font-family: inherit;
-                    font-size: 0.875rem;
-                    min-width: 140px;
-                }
-                
-                .dashboard-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                    gap: var(--space-6);
-                }
-                @media (min-width: 1200px) {
-                    .dashboard-grid {
-                        grid-template-columns: 350px 1fr 1fr;
-                    }
-                    .wider { grid-column: span 1; }
-                }
-
-                .stat-card {
-                    background: var(--muted);
-                    border: 1px solid var(--border);
-                    padding: var(--space-8);
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--space-8);
-                    align-items: center;
-                }
-                .stat-header {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    gap: var(--space-3);
-                    opacity: 0.7;
-                }
-                .stat-header h3 {
-                    font-size: 0.75rem;
-                    text-transform: uppercase;
-                    letter-spacing: 0.1em;
-                    font-weight: 800;
-                }
-                
-                .stat-main {
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--space-8);
-                    width: 100%;
-                }
-                .big-stat {
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--space-1);
-                }
-                .stat-label {
-                    font-size: 0.875rem;
-                    opacity: 0.5;
-                    font-weight: 600;
-                    text-transform: lowercase;
-                }
-                .stat-value {
-                    font-size: 2.5rem;
-                    font-weight: 800;
-                    color: var(--accent);
-                }
-
-                .empty-state {
-                    padding: var(--space-20);
-                    text-align: center;
-                    background: var(--muted);
-                    border: 1px solid var(--border);
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: var(--space-4);
-                    opacity: 0.5;
-                }
-            `}</style>
         </div>
     );
 }

@@ -95,52 +95,6 @@ export default function SpiderGraph({ data, size = 300 }: SpiderGraphProps) {
                     );
                 })}
             </svg>
-
-            <style jsx>{`
-                .spider-graph-container {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin: var(--space-8) 0;
-                }
-                .grid-bg {
-                    fill: var(--muted);
-                    stroke: var(--fg);
-                    stroke-width: 1.5;
-                    opacity: 0.1;
-                }
-                .grid-mid {
-                    fill: none;
-                    stroke: var(--fg);
-                    stroke-width: 1;
-                    opacity: 0.2;
-                    stroke-dasharray: 2;
-                }
-                .axis-line {
-                    stroke: var(--fg);
-                    stroke-width: 1.5;
-                    opacity: 0.1;
-                }
-                .data-shape {
-                    fill: var(--accent);
-                    fill-opacity: 0.15;
-                    stroke: var(--accent);
-                    stroke-width: 2.5;
-                }
-                .graph-label {
-                    font-size: 11px;
-                    font-weight: 900;
-                    text-transform: uppercase;
-                    letter-spacing: 0.08em;
-                    fill: var(--fg);
-                }
-                .scale-number {
-                    font-size: 9px;
-                    font-weight: 700;
-                    fill: var(--fg);
-                    opacity: 0.4;
-                }
-            `}</style>
         </div>
     );
 }

@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Beer, AromaProfile } from "@/types";
 import MetricInput from "./MetricInput";
 import StarRating from "./StarRating";
 import AromaWheel from "./AromaWheel";
 import { supabase } from "@/lib/supabase";
-import { CheckCircle2, User, UserCircle } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 interface FeedbackFormProps {
     beer: Beer;
@@ -29,6 +29,7 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
         bitterness: 5
     });
     const [aromaProfile, setAromaProfile] = useState<AromaProfile>(INITIAL_AROMA);
+    const [wheelSize, setWheelSize] = useState(320);
     const [comment, setComment] = useState("");
     const [reviewer, setReviewer] = useState({
         name: "",
@@ -36,6 +37,17 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
         age: ""
     });
     const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+    useEffect(() => {
+        const updateWheelSize = () => {
+            const availableWidth = Math.min(window.innerWidth - 32, 320);
+            setWheelSize(Math.max(240, availableWidth));
+        };
+
+        updateWheelSize();
+        window.addEventListener("resize", updateWheelSize);
+        return () => window.removeEventListener("resize", updateWheelSize);
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -131,7 +143,7 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
                     <div className="aroma-wheel-box">
                         <AromaWheel
                             data={aromaProfile}
-                            size={320}
+                            size={wheelSize}
                             interactive={false}
                         />
                     </div>
@@ -227,147 +239,6 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
                 {status === "submitting" ? "submitting..." : "submit evaluation"}
             </button>
 
-            <style jsx>{`
-                .feedback-form {
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--space-8);
-                }
-                .form-section {
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--space-4);
-                }
-                .section-header {
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--space-1);
-                }
-                .section-label {
-                    font-size: 0.75rem;
-                    text-transform: uppercase;
-                    letter-spacing: 0.1em;
-                    opacity: 0.8;
-                    font-weight: 700;
-                }
-                .section-desc {
-                    font-size: 0.75rem;
-                    opacity: 0.5;
-                }
-                .optional {
-                    font-size: 0.625rem;
-                    opacity: 0.5;
-                    font-weight: 400;
-                }
-                .demographics-grid {
-                    display: grid;
-                    grid-template-columns: 2fr 1fr 1fr;
-                    gap: var(--space-4);
-                }
-                .field input, .field select {
-                    width: 100%;
-                    padding: var(--space-3);
-                    background: var(--muted);
-                    border: 1px solid var(--border);
-                    color: var(--fg);
-                    font-family: inherit;
-                    font-size: 0.875rem;
-                }
-                .aroma-wheel-box {
-                    padding: var(--space-4);
-                    background: var(--muted);
-                    border: 1px solid var(--border);
-                    display: flex;
-                    justify-content: center;
-                    flex: 1;
-                }
-                .aroma-interactive-container {
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--space-6);
-                }
-                @media (min-width: 768px) {
-                    .aroma-interactive-container {
-                        flex-direction: row;
-                        align-items: flex-start;
-                    }
-                }
-                .aroma-sliders-grid {
-                    display: grid;
-                    grid-template-columns: repeat(2, 1fr);
-                    gap: var(--space-3) var(--space-6);
-                    flex: 1.2;
-                }
-                .aroma-slider-item {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 2px;
-                }
-                .aroma-slider-label {
-                    display: flex;
-                    justify-content: space-between;
-                    font-size: 0.7rem;
-                    font-weight: 700;
-                    text-transform: uppercase;
-                    letter-spacing: 0.05em;
-                    opacity: 0.6;
-                }
-                .aroma-val {
-                    opacity: 1;
-                    color: var(--accent);
-                }
-                .aroma-range-input {
-                    -webkit-appearance: none;
-                    width: 100%;
-                    height: 2px;
-                    background: var(--border);
-                    outline: none;
-                    margin: 8px 0;
-                }
-                .aroma-range-input::-webkit-slider-thumb {
-                    -webkit-appearance: none;
-                    width: 10px;
-                    height: 10px;
-                    background: var(--fg);
-                    border-radius: 50%;
-                    cursor: pointer;
-                    transition: transform 0.1s ease;
-                }
-                .aroma-range-input::-webkit-slider-thumb:hover {
-                    transform: scale(1.3);
-                }
-                .comment-area {
-                    width: 100%;
-                    padding: var(--space-4);
-                    background: var(--muted);
-                    border: 1px solid var(--border);
-                    border-radius: 4px;
-                    color: var(--fg);
-                    font-family: inherit;
-                    resize: vertical;
-                }
-                .comment-area:focus {
-                    outline: none;
-                    border-color: var(--accent);
-                }
-                .btn-block {
-                    width: 100%;
-                    justify-content: center;
-                    padding: var(--space-4);
-                }
-                .success-state {
-                    text-align: center;
-                    padding: var(--space-12) 0;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: var(--space-4);
-                }
-                .success-state h2 {
-                    font-size: 2.5rem;
-                    font-weight: 800;
-                }
-            `}</style>
         </form>
     );
 }

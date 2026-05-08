@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { X, Upload, Loader2, Save } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { Beer } from "@/types";
@@ -102,7 +103,14 @@ export default function BeerEditor({ beer, onClose, onSave }: BeerEditorProps) {
                         <div className="image-col">
                             <div className="image-preview-box">
                                 {formData.label_url ? (
-                                    <img src={formData.label_url} alt="Preview" className="preview-img" />
+                                    <Image
+                                        src={formData.label_url}
+                                        alt="Preview"
+                                        className="preview-img"
+                                        fill
+                                        sizes="240px"
+                                        unoptimized
+                                    />
                                 ) : (
                                     <div className="preview-placeholder">
                                         <Upload size={32} opacity={0.2} />
@@ -210,147 +218,6 @@ export default function BeerEditor({ beer, onClose, onSave }: BeerEditorProps) {
                     </div>
                 </form>
             </div>
-
-            <style jsx>{`
-                .overlay {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    background: rgba(0,0,0,0.8);
-                    backdrop-filter: blur(4px);
-                    z-index: 200;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: var(--space-4);
-                }
-                .editor-modal {
-                    background: var(--bg);
-                    border: 1px solid var(--border);
-                    padding: var(--space-10);
-                    position: relative;
-                    width: 100%;
-                    max-width: 900px;
-                    max-height: 90vh;
-                    overflow-y: auto;
-                    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-                }
-                .editor-title {
-                    font-size: 2rem;
-                    font-weight: 800;
-                    text-transform: lowercase;
-                    margin-bottom: var(--space-8);
-                }
-                .form-grid {
-                    display: grid;
-                    gap: var(--space-8);
-                    margin-bottom: var(--space-8);
-                }
-                @media (min-width: 768px) {
-                    .form-grid { grid-template-columns: 240px 1fr; }
-                }
-                .image-preview-box {
-                    aspect-ratio: 1;
-                    background: var(--muted);
-                    border: 1px solid var(--border);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin-bottom: var(--space-4);
-                    overflow: hidden;
-                }
-                .preview-img { width: 100%; height: 100%; object-fit: contain; }
-                .preview-placeholder {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: var(--space-2);
-                    opacity: 0.6;
-                    font-size: 0.75rem;
-                }
-                .upload-btn {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: var(--space-2);
-                    padding: var(--space-3);
-                    background: var(--fg);
-                    color: var(--bg);
-                    font-size: 0.75rem;
-                    font-weight: 700;
-                    text-transform: uppercase;
-                    cursor: pointer;
-                }
-                
-                .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-4); }
-                .field { margin-bottom: var(--space-4); }
-                .field label {
-                    display: block;
-                    font-size: 0.75rem;
-                    text-transform: uppercase;
-                    letter-spacing: 0.1em;
-                    opacity: 0.8;
-                    font-weight: 700;
-                    margin-bottom: var(--space-2);
-                }
-                input, textarea {
-                    width: 100%;
-                    padding: var(--space-3);
-                    background: var(--bg);
-                    border: 1px solid var(--border);
-                    color: var(--fg);
-                    font-family: inherit;
-                    font-size: 0.875rem;
-                    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-                }
-                input:focus, textarea:focus { 
-                    border-color: var(--accent); 
-                    box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
-                    outline: none; 
-                }
-                
-                .scientific-fields {
-                    border-top: 1px solid var(--border);
-                    padding-top: var(--space-8);
-                    margin-bottom: var(--space-8);
-                }
-                .section-label {
-                    font-size: 0.75rem;
-                    text-transform: uppercase;
-                    letter-spacing: 0.1em;
-                    opacity: 0.8;
-                    margin-bottom: var(--space-6);
-                }
-                .profile-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                    gap: var(--space-4);
-                }
-                
-                .form-actions {
-                    display: flex;
-                    justify-content: flex-end;
-                    gap: var(--space-4);
-                    padding-top: var(--space-6);
-                    border-top: 1px solid var(--border);
-                }
-                .btn {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: var(--space-2);
-                    padding: var(--space-3) var(--space-6);
-                    font-size: 0.75rem;
-                    font-weight: 700;
-                    text-transform: uppercase;
-                    cursor: pointer;
-                }
-                .btn-primary { background: var(--accent); color: var(--bg); border: none; }
-                .btn-secondary { background: none; border: 1px solid var(--border); color: var(--fg); }
-                .close-btn { position: absolute; top: 1rem; right: 1rem; opacity: 0.6; }
-                .close-btn:hover { opacity: 1; }
-            `}</style>
         </div>
     );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Plus, Trash2, Edit2, Loader2 } from "lucide-react";
 import { Beer } from "@/types";
 import { createClient } from "@/utils/supabase/client";
@@ -82,7 +83,14 @@ export default function BeerManagement() {
                 <tr key={beer.id}>
                   <td>
                     <div className="beer-cell">
-                      <img src={beer.label_url} alt={beer.name} className="admin-thumb" />
+                      <Image
+                        src={beer.label_url}
+                        alt={beer.name}
+                        className="admin-thumb"
+                        width={32}
+                        height={32}
+                        unoptimized
+                      />
                       <span className="font-bold">{beer.name}</span>
                     </div>
                   </td>
@@ -132,114 +140,6 @@ export default function BeerManagement() {
           }}
         />
       )}
-
-      <style jsx>{`
-        .beer-management {
-          margin-top: var(--space-16);
-        }
-        .section-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: var(--space-6);
-        }
-        .section-title {
-          font-size: 1.25rem;
-          font-weight: 700;
-          text-transform: lowercase;
-        }
-        .admin-beer-style {
-          font-size: 0.75rem;
-          opacity: 0.7;
-          text-transform: lowercase;
-        }
-        
-        .table-wrapper {
-          border: 1px solid var(--border);
-          background: var(--bg);
-        }
-        .management-container {
-          padding: 0;
-        }
-        @media (max-width: 768px) {
-          .management-container {
-            padding: 0 var(--space-4);
-          }
-        }
-        .admin-table {
-          width: 100%;
-          border-collapse: collapse;
-          font-size: 0.875rem;
-        }
-        .admin-table th {
-          text-align: left;
-          padding: var(--space-4);
-          border-bottom: 2px solid var(--border);
-          text-transform: uppercase;
-          font-size: 0.75rem;
-          letter-spacing: 0.1em;
-          opacity: 0.5;
-        }
-        .admin-table td {
-          padding: var(--space-4);
-          border-bottom: 1px solid var(--border);
-        }
-        .text-right { text-align: right; }
-        
-        .beer-cell {
-          display: flex;
-          align-items: center;
-          gap: var(--space-4);
-        }
-        .font-bold { font-weight: 700; text-transform: lowercase; }
-        
-        .admin-thumb {
-          width: 32px;
-          height: 32px;
-          object-fit: contain;
-          background: var(--muted);
-          border: 1px solid var(--border);
-        }
-        
-        .action-btns {
-          display: flex;
-          justify-content: flex-end;
-          gap: var(--space-4);
-        }
-        
-        .btn-text {
-          display: inline-flex;
-          align-items: center;
-          gap: var(--space-2);
-          font-size: 0.75rem;
-          font-weight: 600;
-          text-transform: lowercase;
-          color: var(--fg);
-          opacity: 0.8;
-          transition: all 0.2s ease;
-          padding: var(--space-1) 0;
-          border-bottom: 1px solid transparent;
-        }
-        .icon-btn {
-          padding: var(--space-2);
-          opacity: 0.7;
-          transition: all 0.2s ease;
-        }
-        .btn-text:hover {
-          opacity: 1;
-          border-bottom-color: currentColor;
-        }
-        .btn-text.danger:hover {
-          color: #ff4d4d;
-        }
-        
-        .btn-sm {
-          display: inline-flex;
-          align-items: center;
-          gap: var(--space-2);
-          padding: var(--space-2) var(--space-4);
-        }
-      `}</style>
     </div>
   );
 }
