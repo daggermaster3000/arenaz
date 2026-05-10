@@ -40,17 +40,18 @@ export default async function Home() {
               <div className="hero-eyebrow">
                 <span className="num">N° 01</span>
                 <span className="rule" aria-hidden />
-                <span>est. {year - 1} · valais, ch</span>
+                <span>est. {year - 1} · arénaz 🇨🇭</span>
               </div>
 
               <h1 className="hero-title">
                 brasserie<br />
                 <span className="accent">arénaz</span>
+                
               </h1>
 
               <div className="hero-meta">
                 <p className="hero-tagline">
-                  craft brewing, <em>scientifically</em> measured.<br />
+                  craft brewing, <em>experimental</em> flavor.<br />
                   small batches, precise data.
                 </p>
                 <div className="hero-actions">

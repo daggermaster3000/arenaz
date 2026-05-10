@@ -61,7 +61,7 @@ export default function RootLayout({
             </div>
             <div className="footer-col">
               <span className="footer-label">location</span>
-              <span className="footer-value">CH / VS</span>
+              <span className="footer-value">CH 🇨🇭</span>
             </div>
             <div className="footer-col footer-meta">
               <span className="footer-label">©</span>
