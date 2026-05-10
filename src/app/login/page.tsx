@@ -36,41 +36,41 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="container login-page min-h-[80vh] flex items-center justify-center">
-            <div className="login-card w-full max-w-md">
-                <header className="mb-12 text-center">
-                    <span className="text-xs font-bold uppercase tracking-widest opacity-40 mb-4 block">secure access</span>
-                    <h1 className="text-5xl font-extrabold lowercase tracking-tight mb-2">brasserie login</h1>
-                    <p className="opacity-60">access the scientific dashboard.</p>
+        <div className="container login-page">
+            <div className="login-card">
+                <header>
+                    <span className="login-eyebrow">secure access</span>
+                    <h1 className="login-title">brasserie login</h1>
+                    <p className="login-subtitle">access the scientific dashboard.</p>
                 </header>
 
-                <form onSubmit={handleLogin} className="space-y-6">
-                    <div className="input-group">
-                        <label className="text-xs font-bold uppercase opacity-50 block mb-2 px-1">email</label>
+                <form onSubmit={handleLogin} className="login-form">
+                    <div className="field">
+                        <label htmlFor="email">email</label>
                         <input
+                            id="email"
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="admin@arenaz.ch"
-                            className="w-full bg-muted border border-border p-4 focus:border-accent outline-none transition-all font-medium"
                             required
                         />
                     </div>
 
-                    <div className="input-group">
-                        <label className="text-xs font-bold uppercase opacity-50 block mb-2 px-1">password</label>
+                    <div className="field">
+                        <label htmlFor="password">password</label>
                         <input
+                            id="password"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="••••••••"
-                            className="w-full bg-muted border border-border p-4 focus:border-accent outline-none transition-all font-medium"
                             required
                         />
                     </div>
 
                     {error && (
-                        <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-sm">
+                        <div className="login-error">
                             {error}
                         </div>
                     )}
@@ -78,7 +78,7 @@ export default function LoginPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-fg text-bg p-5 font-bold uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-accent hover:text-white transition-all disabled:opacity-50"
+                        className="login-submit"
                     >
                         {loading ? (
                             <Loader2 className="animate-spin" size={20} />
@@ -91,10 +91,8 @@ export default function LoginPage() {
                     </button>
                 </form>
 
-                <footer className="mt-12 text-center">
-                    <p className="text-xs opacity-40">
-                        &copy; {new Date().getFullYear()} brasserie arénaz lab. access restricted to authorized personnel.
-                    </p>
+                <footer className="login-footer">
+                    <p>&copy; {new Date().getFullYear()} brasserie arénaz lab. access restricted to authorized personnel.</p>
                 </footer>
             </div>
         </div>

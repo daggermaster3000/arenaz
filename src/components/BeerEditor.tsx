@@ -109,7 +109,6 @@ export default function BeerEditor({ beer, onClose, onSave }: BeerEditorProps) {
                                         className="preview-img"
                                         fill
                                         sizes="240px"
-                                        unoptimized
                                     />
                                 ) : (
                                     <div className="preview-placeholder">

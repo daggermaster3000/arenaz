@@ -1,77 +1,85 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import BeerCard from "@/components/BeerCard";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
 import { Beer, Review } from "@/types";
-import { Loader2 } from "lucide-react";
 
-export default function BeersPage() {
-  const [beers, setBeers] = useState<Beer[]>([]);
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const supabase = createClient();
+export const revalidate = 30;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const [beersRes, reviewsRes] = await Promise.all([
-          supabase.from("beers").select("*").order("name"),
-          supabase.from("reviews").select("beer_id, rating")
-        ]);
+async function getData(): Promise<{
+  beers: Beer[];
+  ratings: Map<string, number>;
+  error: string | null;
+}> {
+  try {
+    const supabase = await createClient();
+    const [beersRes, reviewsRes] = await Promise.all([
+      supabase.from("beers").select("*").order("name"),
+      supabase.from("reviews").select("beer_id, rating"),
+    ]);
 
-        if (beersRes.error) throw beersRes.error;
-        if (reviewsRes.error) throw reviewsRes.error;
+    if (beersRes.error) throw beersRes.error;
+    if (reviewsRes.error) throw reviewsRes.error;
 
-        setBeers(beersRes.data || []);
-        setReviews(reviewsRes.data as any || []);
-      } catch (err: any) {
-        console.error("BeersPage fetch error:", err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
+    const beers = (beersRes.data ?? []) as Beer[];
+    const reviews = (reviewsRes.data ?? []) as Pick<Review, "beer_id" | "rating">[];
+
+    const ratings = new Map<string, number>();
+    for (const beer of beers) {
+      const beerReviews = reviews.filter((r) => r.beer_id === beer.id);
+      if (beerReviews.length === 0) {
+        ratings.set(beer.id, 0);
+      } else {
+        const sum = beerReviews.reduce((acc, r) => acc + r.rating, 0);
+        ratings.set(beer.id, sum / beerReviews.length);
       }
-    };
-    fetchData();
-  }, []);
+    }
 
-  if (loading) {
-    return (
-      <div className="container py-32 flex justify-center">
-        <Loader2 className="animate-spin opacity-20" size={48} />
-      </div>
-    );
+    return { beers, ratings, error: null };
+  } catch (e: any) {
+    return { beers: [], ratings: new Map(), error: e?.message ?? "Failed to load beers" };
   }
+}
+
+export default async function BeersPage() {
+  const { beers, ratings, error } = await getData();
+  const total = beers.length;
 
   return (
-    <div className="container beers-page py-16">
-      <header className="page-header">
-        <h1 className="page-title">our beers</h1>
+    <div className="container beers-page page-shell">
+      <header className="page-head">
+        <div>
+          <div className="page-eyebrow">
+            <span className="num">N° 02</span>
+            <span className="rule" aria-hidden />
+            <span>catalogue</span>
+          </div>
+          <h1 className="page-title">our beers</h1>
+        </div>
         <p className="page-description">
-          a collection of brewing experiments.
+          a working collection of brewing experiments — each entry available for
+          inspection &amp; tasting feedback.
         </p>
       </header>
 
       <div className="beer-grid">
         {error && (
-          <div className="error-message col-span-full">
-            <p className="opacity-50">unable to load our beers.</p>
-            <p className="text-sm opacity-30 mt-2">{error}</p>
+          <div className="error-message">
+            <p>unable to load our beers.</p>
+            <p className="text-xs opacity-50 mt-2">{error}</p>
           </div>
         )}
-        {beers.map((beer) => {
-          const beerReviews = reviews.filter(r => r.beer_id === beer.id);
-          const avgRating = beerReviews.length > 0
-            ? beerReviews.reduce((acc, r) => acc + r.rating, 0) / beerReviews.length
-            : 0;
 
-          return <BeerCard key={beer.id} beer={beer} averageRating={avgRating} />;
-        })}
-        {!error && beers.length === 0 && (
-          <p className="empty-message col-span-full">no beers available in the database.</p>
+        {!error && total === 0 && (
+          <p className="empty-message">no beers in the catalogue yet.</p>
         )}
+
+        {beers.map((beer, i) => (
+          <BeerCard
+            key={beer.id}
+            beer={beer}
+            averageRating={ratings.get(beer.id) ?? 0}
+            index={i}
+          />
+        ))}
       </div>
     </div>
   );

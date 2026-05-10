@@ -24,9 +24,7 @@ export default function FeedbackPage({ params }: { params: Promise<{ id: string 
         .eq("id", resolvedParams.id)
         .single();
 
-      if (!error && data) {
-        setBeer(data);
-      }
+      if (!error && data) setBeer(data);
       setLoading(false);
     };
     fetchBeer();
@@ -34,25 +32,31 @@ export default function FeedbackPage({ params }: { params: Promise<{ id: string 
 
   if (loading) {
     return (
-      <div className="container py-32 flex justify-center">
-        <Loader2 className="animate-spin opacity-20" size={48} />
+      <div className="loading-screen">
+        <Loader2 className="animate-spin" size={28} />
+        <span>preparing form…</span>
       </div>
     );
   }
 
-  if (!beer) {
-    notFound();
-  }
+  if (!beer) notFound();
 
   return (
-    <div className="container feedback-page py-16">
+    <div className="container feedback-page page-shell">
       <div className="feedback-layout">
-        <header className="page-header">
-          <span className="style-tag">feedback / {beer.name}</span>
-          <h1 className="page-title">tasting scorecard</h1>
-          <p className="page-description">
-            please provide your objective evaluation according to the following metrics.
-          </p>
+        <header className="page-head" style={{ gridTemplateColumns: "1fr" }}>
+          <div>
+            <div className="page-eyebrow">
+              <span className="num">N° 03</span>
+              <span className="rule" aria-hidden />
+              <span>tasting / {beer.name.toLowerCase()}</span>
+            </div>
+            <h1 className="page-title">scorecard</h1>
+            <p className="page-description" style={{ marginTop: "0.75rem" }}>
+              objective evaluation across appearance, aroma, palate &amp;
+              character. your contribution becomes part of the public profile.
+            </p>
+          </div>
         </header>
 
         <FeedbackForm beer={beer} />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Star, ListFilter, Loader2, X } from "lucide-react";
+import { Star, ListFilter, Loader2, X, LogOut } from "lucide-react";
 import AromaWheel from "@/components/AromaWheel";
 import MetricsDashboard from "@/components/MetricsDashboard";
 import BeerManagement from "@/components/BeerManagement";
@@ -9,7 +9,6 @@ import SpiderGraph from "@/components/SpiderGraph";
 import { createClient } from "@/utils/supabase/client";
 import { Beer, Review } from "@/types";
 import { useRouter } from "next/navigation";
-import { LogOut } from "lucide-react";
 
 export default function AdminDashboard() {
     const [reviews, setReviews] = useState<Review[]>([]);
@@ -70,11 +69,11 @@ export default function AdminDashboard() {
             <div className="container py-32 text-center">
                 <p className="opacity-50">unable to connect to database or tables missing.</p>
                 <p className="text-sm opacity-30 mt-2">{error}</p>
-                <div className="mt-8 p-4 bg-muted border border-border inline-block text-left max-w-md mx-auto">
+                <div className="mt-8 p-4 bg-muted inline-block text-left max-w-md mx-auto" style={{ border: "1px solid var(--border)" }}>
                     <p className="text-xs font-bold uppercase mb-2">tip</p>
                     <p className="text-xs opacity-70">
                         ensure you have run the setup script in your supabase sql editor:
-                        <code className="block mt-2 p-2 bg-bg border border-border">supabase_setup.sql</code>
+                        <code style={{ display: "block", marginTop: "0.5rem", padding: "0.5rem", background: "var(--surface)", border: "1px solid var(--border)" }}>supabase_setup.sql</code>
                     </p>
                 </div>
             </div>
@@ -87,7 +86,7 @@ export default function AdminDashboard() {
 
     return (
         <div className="container admin-page py-16">
-            <header className="page-header flex justify-between items-start">
+            <header className="page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 <div>
                     <h1 className="page-title">admin dashboard</h1>
                     <p className="page-description">
@@ -96,7 +95,7 @@ export default function AdminDashboard() {
                 </div>
                 <button
                     onClick={handleLogout}
-                    className="btn btn-secondary flex items-center gap-2 opacity-60 hover:opacity-100 transition-opacity"
+                    className="btn btn-secondary admin-logout"
                 >
                     <LogOut size={16} />
                     <span>logout</span>
@@ -199,7 +198,6 @@ export default function AdminDashboard() {
                 <BeerManagement />
             </div>
 
-            {/* Review Details Overlay */}
             {selectedReview && (
                 <div className="admin-overlay" onClick={() => setSelectedReview(null)}>
                     <div className="admin-overlay-content" onClick={e => e.stopPropagation()}>
@@ -228,7 +226,7 @@ export default function AdminDashboard() {
                             )}
                         </header>
 
-                            <div className="admin-overlay-grid">
+                        <div className="admin-overlay-grid">
                             <div className="graph-col">
                                 <h3 className="section-label">scientific metrics</h3>
                                 <SpiderGraph data={selectedReview.metrics} size={260} />
@@ -259,7 +257,6 @@ export default function AdminDashboard() {
                     </div>
                 </div>
             )}
-
         </div>
     );
 }

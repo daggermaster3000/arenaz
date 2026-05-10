@@ -87,9 +87,8 @@ export default function BeerManagement() {
                         src={beer.label_url}
                         alt={beer.name}
                         className="admin-thumb"
-                        width={32}
-                        height={32}
-                        unoptimized
+                        width={36}
+                        height={36}
                       />
                       <span className="font-bold">{beer.name}</span>
                     </div>

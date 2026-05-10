@@ -8,40 +8,50 @@ import { Star } from "lucide-react";
 interface BeerCardProps {
   beer: Beer;
   averageRating?: number;
+  index?: number;
 }
 
-export default function BeerCard({ beer, averageRating = 0 }: BeerCardProps) {
+export default function BeerCard({ beer, averageRating = 0, index = 0 }: BeerCardProps) {
+  const num = String(index + 1).padStart(2, "0");
+
   return (
-    <div className="beer-card">
+    <Link href={`/beers/${beer.id}`} className="beer-card" aria-label={`View ${beer.name}`}>
+      <div className="beer-card-head">
+        <span className="beer-card-num">N° {num}</span>
+        <span className="beer-card-rating">
+          <Star size={11} fill="currentColor" strokeWidth={0} />
+          <span>{averageRating > 0 ? averageRating.toFixed(1) : "—"}</span>
+        </span>
+      </div>
+
       <div className="beer-image-container">
         <Image
           src={beer.mockup_url || beer.label_url}
           alt={beer.name}
           className="beer-image"
           fill
-          sizes="(max-width: 768px) 100vw, 25vw"
-          unoptimized
+          sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
+          quality={80}
         />
       </div>
-      <div className="beer-info">
-        <div className="beer-header">
-          <h3 className="beer-name">{beer.name}</h3>
-          <div className="beer-rating">
-            <Star size={14} fill="currentColor" />
-            <span>{averageRating.toFixed(1)}</span>
-          </div>
-        </div>
-        <p className="beer-style">{beer.style} • {beer.abv}% ABV</p>
-        <div className="beer-actions">
-          <Link href={`/beers/${beer.id}`} className="btn btn-secondary btn-sm">
-            details
-          </Link>
-          <Link href={`/feedback/${beer.id}`} className="btn btn-primary btn-sm">
-            rate
-          </Link>
-        </div>
+
+      <div className="beer-rule" aria-hidden />
+
+      <div className="beer-card-info">
+        <h3 className="beer-name">{beer.name}</h3>
+        <p className="beer-style">{beer.style}</p>
       </div>
 
-    </div>
+      <div className="beer-card-meta">
+        <div className="beer-card-stat">
+          <span className="beer-card-stat-value">{beer.abv}%</span>
+          <span className="beer-card-meta-label">abv</span>
+        </div>
+        <div />
+        <span className="beer-card-cta">
+          view <span aria-hidden>→</span>
+        </span>
+      </div>
+    </Link>
   );
 }

@@ -96,6 +96,8 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
 
     return (
         <form onSubmit={handleSubmit} className="feedback-form">
+
+            {/* ── Who are you? ─────────────────────────────── */}
             <div className="form-section">
                 <label className="section-label">who are you? <span className="optional">(optional)</span></label>
                 <div className="demographics-grid">
@@ -130,11 +132,13 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
                 </div>
             </div>
 
+            {/* ── Overall experience ───────────────────────── */}
             <div className="form-section">
                 <label className="section-label">overall experience</label>
                 <StarRating rating={rating} onRatingChange={setRating} size={32} />
             </div>
 
+            {/* ── Aroma profiling ──────────────────────────── */}
             <div className="form-section">
                 <label className="section-label">aroma profiling</label>
                 <p className="section-desc">precisely tune the flavor intensity across 12 scientific categories.</p>
@@ -172,54 +176,61 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
                 </div>
             </div>
 
-
+            {/* ── Tasting metrics ──────────────────────────── */}
             <div className="form-section">
-                <label className="section-label">metrics</label>
-                <p className="section-desc">assess on a scale of 1-10 the following metrics</p>
+                <label className="section-label">tasting metrics</label>
+                <p className="section-desc">rate each attribute from 1 (poor) to 10 (excellent).</p>
 
-                <MetricInput
-                    label="bubbles & carbonation"
-                    description="Assess the size, intensity, and persistence of the carbon dioxide bubbles. Is it lively, prickly, or creamy?"
-                    value={metrics.bubbles}
-                    onChange={(v) => setMetrics({ ...metrics, bubbles: v })}
-                />
+                <div className="metrics-group">
+                    <span className="metrics-group-label">perception</span>
+                    <MetricInput
+                        label="appearance"
+                        description="Color, clarity, and visual appeal. Does it look inviting?"
+                        value={metrics.appearance}
+                        onChange={(v) => setMetrics({ ...metrics, appearance: v })}
+                    />
+                    <MetricInput
+                        label="aroma"
+                        description="Intensity and complexity of the scents. Does it smell inviting?"
+                        value={metrics.aroma}
+                        onChange={(v) => setMetrics({ ...metrics, aroma: v })}
+                    />
+                </div>
 
-                <MetricInput
-                    label="appearance"
-                    description="Color, clarity, does it look nice?"
-                    value={metrics.appearance}
-                    onChange={(v) => setMetrics({ ...metrics, appearance: v })}
-                />
+                <div className="metrics-group">
+                    <span className="metrics-group-label">palate</span>
+                    <MetricInput
+                        label="flavor balance"
+                        description="Interaction between malt sweetness and hop bitterness. Note any off-flavors. Does it taste good?"
+                        value={metrics.flavor}
+                        onChange={(v) => setMetrics({ ...metrics, flavor: v })}
+                    />
+                    <MetricInput
+                        label="mouthfeel & body"
+                        description="The tactile sensation of the beer. Consider viscosity, astringency, and warmth from alcohol."
+                        value={metrics.mouthfeel}
+                        onChange={(v) => setMetrics({ ...metrics, mouthfeel: v })}
+                    />
+                    <MetricInput
+                        label="bitterness"
+                        description="Intensity and quality of the hop bitterness. Is it smooth, sharp, or lingering?"
+                        value={metrics.bitterness}
+                        onChange={(v) => setMetrics({ ...metrics, bitterness: v })}
+                    />
+                </div>
 
-                <MetricInput
-                    label="aroma profile"
-                    description="Intensity and complexity of the scents. Does it smell nice?"
-                    value={metrics.aroma}
-                    onChange={(v) => setMetrics({ ...metrics, aroma: v })}
-                />
-
-                <MetricInput
-                    label="flavor balance"
-                    description="Interaction between malt sweetness and hop bitterness. Note any off-flavors or specific flavor compounds. Does it taste nice?"
-                    value={metrics.flavor}
-                    onChange={(v) => setMetrics({ ...metrics, flavor: v })}
-                />
-
-                <MetricInput
-                    label="mouthfeel & body"
-                    description="The tactile sensation of the beer. Consider viscosity, astringency, and warmth from alcohol."
-                    value={metrics.mouthfeel}
-                    onChange={(v) => setMetrics({ ...metrics, mouthfeel: v })}
-                />
-
-                <MetricInput
-                    label="bitterness"
-                    description="Intensity and quality of the hop bitterness. Is it smooth, sharp, or lingering?"
-                    value={metrics.bitterness}
-                    onChange={(v) => setMetrics({ ...metrics, bitterness: v })}
-                />
+                <div className="metrics-group">
+                    <span className="metrics-group-label">character</span>
+                    <MetricInput
+                        label="bubbles & carbonation"
+                        description="Assess the size, intensity, and persistence of the CO₂ bubbles. Is it lively, prickly, or creamy?"
+                        value={metrics.bubbles}
+                        onChange={(v) => setMetrics({ ...metrics, bubbles: v })}
+                    />
+                </div>
             </div>
 
+            {/* ── Observations ─────────────────────────────── */}
             <div className="form-section">
                 <label className="section-label">observations</label>
                 <textarea
@@ -235,9 +246,16 @@ export default function FeedbackForm({ beer }: FeedbackFormProps) {
                 type="submit"
                 className="btn btn-primary btn-block"
                 disabled={status === "submitting" || rating === 0}
+                title={rating === 0 ? "please add an overall star rating first" : undefined}
             >
                 {status === "submitting" ? "submitting..." : "submit evaluation"}
             </button>
+
+            {rating === 0 && (
+                <p className="text-center text-xs opacity-50" style={{ marginTop: "-0.5rem" }}>
+                    add a star rating above to enable submission
+                </p>
+            )}
 
         </form>
     );
